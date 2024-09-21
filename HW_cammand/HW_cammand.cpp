@@ -63,19 +63,6 @@ int main() {
     print(PC);
     print(PF);
 
-    // invoker;
-    //invoker.print(&PC);
-    
-
-    //delete invoker;
- //   delete receiver;
-
-
-
-    //delete sC;
-    //delete remote;
-   // delete invoker;
-   // delete receiver;
 
     return 0;
 }
