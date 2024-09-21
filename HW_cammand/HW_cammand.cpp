@@ -1,54 +1,75 @@
 ﻿#include <iostream>
 #include<vector>
+#include <fstream>
 
 class LogCommand {
 public:
     virtual ~LogCommand() = default;
-    virtual void print() = 0;
+    virtual void print(const std::string& message) = 0;
 };
 
 class PrintConsole : public LogCommand {
-private:
-    std::string pay_load_;
-
 public:
-    explicit PrintConsole(std::string pay_load) : pay_load_(pay_load) {
-    }
-    void print() override {
-        std::cout << "Print Console (" << this->pay_load_ << ")\n";
+    explicit PrintConsole() {    }
+
+    void print(const std::string& message)  {
+        std::cout << "Print Console (" << message << ")\n";
     }
 };
 
 class PrintFile : public LogCommand {
 private:
-    std::string pay_load_;
 
+    std::string path_;
 public:
-    explicit PrintFile(std::string pay_load): pay_load_(pay_load) {
-    }
-    void print() override {
-        std::cout << "Print to file (" << this->pay_load_ << ")\n";
+    explicit PrintFile(std::string path) : path_(path){    }
+
+    void print(const std::string& message) {
+        std::string file_path = path_; 
+        file_path += "output.txt";
+        std::cout << file_path << std::endl;
+        std::ofstream outputFile(file_path); 
+
+        if (outputFile.is_open()) { 
+            outputFile << message << std::endl; 
+            outputFile.close();
+            std::cout << "Data was written to output.txt\n";
+        }
+        else {
+            std::cerr << "Error opening file\n";
+        }
     }
 };
 
 
-class PrintControl {
-public:
-    void print(LogCommand* cmd)
-    {
-        cmd->print();
-    }
 
-};
-
+void print(LogCommand& cmd) {
+    cmd;
+}
 
 int main() {
-    PrintConsole PC("Say Hi!");
-    PrintFile PF("Say Bye!");
-
+    /*impleCommand sC("Say Hi!");
+    SimpleCommand2 sC2("Say Bye!");
     PrintControl prnt;
-    prnt.print(&PC);
-    prnt.print(&PF);
+    prnt.print(&sC);
+    prnt.print(&sC2);*/
+
+    PrintConsole PC;
+    PC.print("Hello");
+
+    PrintFile PF("C:/Users/");
+    PF.print("Hello");
+
+    print(PC);
+    print(PF);
+
+    // invoker;
+    //invoker.print(&PC);
+    
+
+    //delete invoker;
+ //   delete receiver;
+
 
 
     //delete sC;
