@@ -26,14 +26,13 @@ public:
 
     void print(const std::string& message) {
         std::string file_path = path_; 
-        file_path += "output.txt";
-        std::cout << file_path << std::endl;
+        file_path = "output.txt"; //+= "output.txt";
         std::ofstream outputFile(file_path); 
 
         if (outputFile.is_open()) { 
             outputFile << message << std::endl; 
             outputFile.close();
-            std::cout << "Data was written to output.txt\n";
+            std::cout <<"Message \"" << message << "\" was written to output.txt\n";
         }
         else {
             std::cerr << "Error opening file\n";
@@ -41,27 +40,17 @@ public:
     }
 };
 
-
-
-void print(LogCommand& cmd) {
-    cmd;
-}
+void print(LogCommand& command, std::string message) {
+    command.print(message);
+};
 
 int main() {
-    /*impleCommand sC("Say Hi!");
-    SimpleCommand2 sC2("Say Bye!");
-    PrintControl prnt;
-    prnt.print(&sC);
-    prnt.print(&sC2);*/
-
+    
     PrintConsole PC;
-    PC.print("Hello");
-
     PrintFile PF("C:/Users/");
-    PF.print("Hello");
-
-    print(PC);
-    print(PF);
+   
+    print(PC, "Hello");
+    print(PF, "Hello");
 
 
     return 0;
